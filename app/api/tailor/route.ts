@@ -43,9 +43,10 @@ Respond ONLY with valid JSON. No explanation, no markdown, just the JSON object.
     const parsed = JSON.parse(text);
 
     return NextResponse.json(parsed);
-  } catch {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "Failed to generate tailored resume. Please try again." },
+      { error: message },
       { status: 500 }
     );
   }
