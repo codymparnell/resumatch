@@ -40,7 +40,8 @@ Respond ONLY with valid JSON. No explanation, no markdown, just the JSON object.
 
     const text =
       message.content[0].type === "text" ? message.content[0].text : "";
-    const parsed = JSON.parse(text);
+    const cleaned = text.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
+    const parsed = JSON.parse(cleaned);
 
     return NextResponse.json(parsed);
   } catch (err) {
